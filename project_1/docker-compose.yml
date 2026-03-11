@@ -1,0 +1,21 @@
+# docker-compose.yml
+services:
+  traefik:
+    image: traefik:v3.6
+    container_name: traefik-project-1
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/traefik.yaml:/etc/traefik/traefik.yaml:ro
+    networks:
+      - frontend
+    restart: unless-stopped
+networks:
+    frontend:
