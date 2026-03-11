@@ -1,0 +1,14 @@
+# whoami.yml
+services:
+  whoami:
+    image: traefik/whoami
+    networks:
+      - frontend
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.whoami.rule=Host(`whoami.localhost`)
+      - traefik.http.routers.whoami.entryPoints=web
+    restart: unless-stopped
+networks:
+  frontend:
+    external: true
